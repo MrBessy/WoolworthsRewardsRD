@@ -8,12 +8,12 @@ def sample_item():
     return GroceryItem("Apple", 1.99)
 
 def test_initialization(sample_item):
-    assert sample_item.getItemName() == "Apple"
-    assert sample_item.getItemPrice() == 1.99
+    assert sample_item.get_item_name() == "Apple"
+    assert sample_item.get_item_price() == 1.99
 
 def test_getters(sample_item):
-    assert sample_item.getItemName() == "Apple"
-    assert sample_item.getItemPrice() == 1.99
+    assert sample_item.get_item_name() == "Apple"
+    assert sample_item.get_item_price() == 1.99
 
 def test_equality():
     item1 = GroceryItem("Apple", 1.99)

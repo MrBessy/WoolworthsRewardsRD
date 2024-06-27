@@ -26,23 +26,23 @@ class GroceryItem():
         self.__item_name = item_name
         self.__item_price = item_price
 
-    def getItemName(self) -> str:
+    def get_item_name(self) -> str:
         """Returns the name of the item."""
         return self.__item_name
     
-    def getItemPrice(self) -> float:
+    def get_item_price(self) -> float:
         """"Returns the price of the item."""
         return self.__item_price
     
-    def setItemPrice(self, new_price: float) -> None:
+    def set_item_price(self, new_price: float) -> None:
         """Sets the price of the item."""
         self.__item_price = new_price
     
     def __eq__(self, other):
         """Evaulates an instance of this class against another."""
         if isinstance(other, GroceryItem):
-            return (self.getItemName() == other.getItemName() and
-                    self.getItemPrice() == other.getItemPrice())
+            return (self.get_item_name() == other.get_item_name() and
+                    self.get_item_price() == other.get_item_price())
         return False
     
     def __str__(self):
@@ -55,6 +55,6 @@ class GroceryItem():
 
     def __repr__(self):
         """Return the data associated with the item."""
-        grocery_item_repr = f"GroceryItem({self.get_id_num()}, '{self.get_item_name()}', {self.get_item_price()})"
+        grocery_item_repr = f"GroceryItem('{self.get_item_name()}', {self.get_item_price()})"
 
         return grocery_item_repr
