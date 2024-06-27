@@ -1,1 +1,2 @@
 from .shopper_interface import ShopperInterface
+from .digital_receipt_interface import DigitalReceiptInterface
