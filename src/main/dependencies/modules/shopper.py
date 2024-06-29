@@ -10,9 +10,9 @@ class Shopper(ShopperInterface):
     - __paid_for_items (bool): Indicates if the shopper has paid for the total in store.
     - __cart_total (float): Total cost of items in the shopper's cart."""
 
-    def __init__(self, shopper_name):
+    def __init__(self):
         """Initialize the Shopper object."""
-        self.__name = shopper_name
+        self.__name = None
         self.__personal_cart_items = []
         self.__paid_for_items = False
         self.__personal_cart_total = 0.0
@@ -20,6 +20,9 @@ class Shopper(ShopperInterface):
     def get_name(self) -> str:
         """Returns the name of the shopper."""
         return self.__name
+    
+    def set_name(self, new_name) -> None:
+        self.__name =new_name
 
     def get_personal_cart_items(self) -> list:
         """Returns the cart items allocated to the shopper."""

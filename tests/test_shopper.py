@@ -1,17 +1,25 @@
 import pytest
-from src.modules import GroceryItem, Shopper
+from src.main.dependencies.modules import GroceryItem, Shopper
 
 @pytest.fixture
 def sample_shopper():
-    return Shopper("John Doe")
+    shopper = Shopper()
+    shopper.set_name("John Doe")
+    return shopper
 
 @pytest.fixture
 def sample_item():
-    return GroceryItem("Apple", 1.99)
+    item = GroceryItem()
+    item.set_item_name("Apple")
+    item.set_item_price(1.99)
+    return item
 
 @pytest.fixture
 def another_item():
-    return GroceryItem("Banana", 0.99)
+    item = GroceryItem()
+    item.set_item_name("Banana")
+    item.set_item_price(0.99)
+    return item
 
 def test_initialization(sample_shopper):
     assert sample_shopper.get_name() == "John Doe"

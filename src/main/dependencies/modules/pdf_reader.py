@@ -13,9 +13,9 @@ class PDFReader(PDFReaderInterface):
         __EDR_disount_found (bool): Flag indicating if an Everyday Rewards discount was found.
         __header_row (int): Default header row number for receipts."""
 
-    def __init__(self, file_location:str, header_row=4):
+    def __init__(self, header_row=4):
         
-        self.__file_location = file_location
+        self.__file_location = ""
         self.__items_dict = {}
         self.__receipt_total = 0.0
         self.__EDR_disount_found = False

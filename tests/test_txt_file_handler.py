@@ -2,7 +2,7 @@
 
 import pytest
 from unittest.mock import mock_open, patch
-from src.modules import TxtFileHandler
+from src.main.dependencies.modules import TxtFileHandler
 
 @pytest.fixture
 def txt_file_handler():
@@ -10,7 +10,7 @@ def txt_file_handler():
 
 @pytest.fixture
 def txt_file_for_testing():
-    return "src/tests/txt_file_for_testing.txt"
+    return "../WoolworthsRewardsRD/tests/txt_file_for_testing.txt"
 
 def test_write_to_file(txt_file_handler, txt_file_for_testing):
     contents_to_write = ['Line 1', 'Line 2', 'Line 3']

@@ -14,17 +14,13 @@ class GroceryItem():
     - __repr__: Return the data associated with the item.
     """
 
-    def __init__(self, item_name: str, item_price: float):
+    def __init__(self):
         """
         Initialize the GroceryItem object.
-
-        Parameters:
-        - item_name (str): Name of the grocery item.
-        - item_price (float): Price of the grocery item.
         """
         
-        self.__item_name = item_name
-        self.__item_price = item_price
+        self.__item_name = None
+        self.__item_price = None
 
     def get_item_name(self) -> str:
         """Returns the name of the item."""
@@ -33,7 +29,11 @@ class GroceryItem():
     def get_item_price(self) -> float:
         """"Returns the price of the item."""
         return self.__item_price
-    
+
+    def set_item_name(self, new_name: str) -> None:
+        """Sets the price of the item."""
+        self.__item_name = new_name
+
     def set_item_price(self, new_price: float) -> None:
         """Sets the price of the item."""
         self.__item_price = new_price

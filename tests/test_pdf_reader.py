@@ -1,15 +1,17 @@
 # test/test_PDFReader
 
 import pytest
-from src.modules import PDFReader
+from src.main.dependencies.modules import PDFReader
 
 @pytest.fixture
 def pdf_reader():
-    return PDFReader(file_location="test_receipt.pdf")
+    scanner = PDFReader()
+    scanner.set_file_location("test_receipt.pdf")
+    return scanner
 
 @pytest.fixture
 def pdf_file_location():
-    return 'src/tests/pdf_test_receipts/eReceipt_5799_Mawson Lakes_06Jan2024__kdusv.pdf'
+    return '../WoolworthsRewardsRD/tests/pdf_test_receipts/eReceipt_5799_Mawson Lakes_06Jan2024__kdusv.pdf'
 
 def test_initialization(pdf_reader):
     assert pdf_reader.get_file_location() == "test_receipt.pdf"

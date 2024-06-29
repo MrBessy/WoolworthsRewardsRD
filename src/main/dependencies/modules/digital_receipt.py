@@ -9,26 +9,16 @@ class DigitalReceipt(DigitalReceiptInterface):
     - __receipt_total (float): Total cost of items in the receipt.
     - __everyday_extra_discount (float): Extra discount applied to items if specified."""
 
-    def __init__(self, receipt_items, receipt_total, ERD_applied_discount=False):
+
+
+    def __init__(self):
         """
         Initialize the Receipt object.
-
-        Parameters:
-        - receipt_items (dict): Dictionary of receipt items.
-        - receipt_total (float): Total cost of items in the receipt.
-        - applied_discount (float): Extra discount applied to items if specified.
         """
         
-        self.__receipt_items = receipt_items
-        self.__receipt_total = receipt_total
-        
-        if ERD_applied_discount == False:
-            self.__everyday_extra_discount = 0.0
-        
-        else:
-            self.__everyday_extra_discount = 0.9
-            self.recalculate_items_price(self.__everyday_extra_discount)
-            self.calculate_receipt_total(True)
+        self.__receipt_items = None
+        self.__receipt_total = None
+        self.__everyday_extra_discount = 0.0
 
     def get_receipt_items(self) -> list:
         """Returns the items inside the receipt."""
@@ -48,6 +38,19 @@ class DigitalReceipt(DigitalReceiptInterface):
     def set_receipt_total(self, new_total: float) -> None:
         """Sets the receipt total with float number passed"""
         self.__receipt_total = new_total
+
+    def set_receipt_items(self, new_receipt_items: dict) -> None:
+        self.__receipt_items = new_receipt_items
+
+    def set_EDR_discount_found(self, EDR_bool: bool) -> None:
+        
+        if EDR_bool == False:
+            self.__everyday_extra_discount = 0.0
+        
+        else:           # Set and apply discount
+            self.__everyday_extra_discount = 0.9
+            self.recalculate_items_price(self.__everyday_extra_discount)
+            self.calculate_receipt_total(True)
     
     def calculate_receipt_total(self, set_new_total=False) -> None:
         """Calculates the receipt total using the items in the receipt.

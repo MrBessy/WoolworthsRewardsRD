@@ -1,9 +1,7 @@
 # test/test_ReceiptContentsFactory
 
 import pytest
-from src.modules import ReceiptContentsFactory
-from src.modules import DigitalReceipt
-from src.modules import GroceryItem
+from src.main.dependencies.modules import ReceiptContentsFactory, DigitalReceipt, GroceryItem
 
 # Mock data for testing
 @pytest.fixture
@@ -25,6 +23,8 @@ def sample_EDR_discount_bool():
 # Test case for ReceiptContentsFactory class
 def test_create_grocery_items(sample_item_dict):
     factory = ReceiptContentsFactory()
+    factory.set_grocery_dependency(GroceryItem)
+    
     grocery_items = factory._create_grocery_items(sample_item_dict)
 
     assert isinstance(grocery_items, dict)
@@ -37,6 +37,11 @@ def test_create_grocery_items(sample_item_dict):
 
 def test_create_digital_receipt(sample_item_dict, sample_total, sample_EDR_discount_bool):
     factory = ReceiptContentsFactory()
+
+    # Is to be handled by the AppFlowManager in run-time
+    factory.set_digital_receipt_dependency(DigitalReceipt)
+    factory.set_grocery_dependency(GroceryItem)
+    
     receipt = factory.create_digital_recipet(sample_item_dict, sample_total, sample_EDR_discount_bool)
 
     assert isinstance(receipt, DigitalReceipt)
