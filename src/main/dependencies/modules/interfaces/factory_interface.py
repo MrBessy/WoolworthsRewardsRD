@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
+from typing import Dict
 from .digital_receipt_interface import DigitalReceiptInterface
 from ..grocery_item import GroceryItem
 
 class FactoryInterface(ABC):
 
     @abstractmethod
-    def _create_grocery_items(self, item_dict) -> dict[str:GroceryItem]:
+    def _create_grocery_items(self, item_dict) -> Dict[str,GroceryItem]:
         pass
 
     @abstractmethod

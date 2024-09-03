@@ -39,7 +39,7 @@ def test_create_digital_receipt(sample_item_dict, sample_total, sample_EDR_disco
     factory = ReceiptContentsFactory()
 
     # Is to be handled by the AppFlowManager in run-time
-    factory.set_digital_receipt_dependency(DigitalReceipt)
+    factory.set_digital_receipt_dependency(DigitalReceipt())
     factory.set_grocery_dependency(GroceryItem)
     
     receipt = factory.create_digital_recipet(sample_item_dict, sample_total, sample_EDR_discount_bool)

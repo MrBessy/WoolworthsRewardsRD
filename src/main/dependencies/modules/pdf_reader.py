@@ -41,9 +41,19 @@ class PDFReader(PDFReaderInterface):
 
             for line in adjusted_lines:
                 item = self._identify_line_item(line)
-                price= self._identify_line_value(line)
-
-                prepped_data_dict[item] = price
+                price = self._identify_line_value(line)
+                
+                # Initialize a counter for the item
+                count = 1
+                item_name_with_count = item
+                
+                # Check if the item already exists in the dictionary
+                while item_name_with_count in prepped_data_dict:
+                    count += 1
+                    item_name_with_count = f"{item} #{count}"  # Append the count to the item name
+                
+                # Add the item with the modified name to the dictionary
+                prepped_data_dict[item_name_with_count] = price
 
             self.set_items_dict(prepped_data_dict)
 
@@ -92,7 +102,7 @@ class PDFReader(PDFReaderInterface):
     def _locate_and_adjust_for_discounts(self, sorted_lines) -> list:
         """Locate discounts and adjust item prices accordingly."""
 
-        discount_conditions = ["Member Price Saving", "Everyday Extra Discount", "OFFER", "Everyday Extra Perk"]
+        discount_conditions = ["Member Price Saving", "Everyday Extra Discount", "OFFER", "Everyday Extra Perk", "Offe ", "ANY 2 ", "ANY 3 ", "PRICE REDUCED "]
         lines_to_remove = []
         loop_index = 0
 
@@ -137,15 +147,19 @@ class PDFReader(PDFReaderInterface):
 
         self.set_receipt_total(total)
 
-    
+    def item_line_prep(self, line_to_prep):
+        prepped_line = line_to_prep.replace("#", "").replace("^", "").strip()
+        return prepped_line 
+
     def _identify_line_item(self, adjusted_line) -> str:
         """Identify the item name from an adjusted line of text."""
 
         adjusted_line = adjusted_line.strip()
         line_values = adjusted_line.split("  ")
-        item_name = line_values[0]
+        item_str = line_values[0]
+        item_name = self.item_line_prep(item_str)
 
-        return item_name.strip()
+        return item_name
     
     def _identify_line_value(self, adjusted_line) -> float:
         """Identify the price value from an adjusted line of text."""

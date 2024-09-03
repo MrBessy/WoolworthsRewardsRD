@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from typing import List, Dict
 from ..dependencies.modules.interfaces import ShopperInterface, DigitalReceiptInterface
 
 class ManagerInterface(ABC):
@@ -6,9 +7,13 @@ class ManagerInterface(ABC):
     @abstractmethod
     def create_shopper(self, shopper_name) -> ShopperInterface:
         pass
+
+    @abstractmethod
+    def get_shopper_dict(self) -> Dict[str,ShopperInterface]:
+        pass
     
     @abstractmethod
-    def retreive_exisitng_shoppers(self, file_location) -> list[ShopperInterface]:
+    def retreive_exisitng_shoppers(self, file_location) -> List[ShopperInterface]:
         pass
 
     @abstractmethod

@@ -1,5 +1,6 @@
 from .interfaces import FactoryInterface, DigitalReceiptInterface
 from .grocery_item import GroceryItem
+from typing import Dict
 
 class ReceiptContentsFactory(FactoryInterface):
     """Factory class for creating grocery items and digital receipts."""
@@ -8,7 +9,7 @@ class ReceiptContentsFactory(FactoryInterface):
         self.__grocery_item_class = None
         self.__digital_receipt_class = None
 
-    def _create_grocery_items(self, item_dict) -> dict[str:GroceryItem]:
+    def _create_grocery_items(self, item_dict) -> Dict[str,GroceryItem]:
         """
         Create and return a dictionary of GroceryItem instances from item_dict.
 
@@ -20,10 +21,10 @@ class ReceiptContentsFactory(FactoryInterface):
         """
         prepped_item_dictionary = {}
         for item_name, item_price in item_dict.items():
-            new_grocery_class = self.get_grocery_dependency()()
+            new_grocery_class = self.get_grocery_dependency() 
             new_grocery_class.set_item_name(item_name)
             new_grocery_class.set_item_price(item_price)
-
+    
             prepped_item_dictionary[item_name] = new_grocery_class
         return prepped_item_dictionary
 
@@ -42,8 +43,9 @@ class ReceiptContentsFactory(FactoryInterface):
         """
 
         new_receipt_items = self._create_grocery_items(item_dict)
-        receipt = self.get_digital_receipt_dependency()()
+        receipt = self.get_digital_receipt_dependency()
         receipt.set_receipt_items(new_receipt_items)
+        
         receipt.set_receipt_total(total)
         receipt.set_EDR_discount_found(EDR_discount_bool)
 
@@ -57,7 +59,11 @@ class ReceiptContentsFactory(FactoryInterface):
         self.__digital_receipt_class = digital_receipt_dependency
 
     def get_grocery_dependency(self) -> GroceryItem:
-        return self.__grocery_item_class
-    
+        if self.__grocery_item_class is None:
+            raise ValueError("Grocery item dependency not set")
+        return self.__grocery_item_class()
+
     def get_digital_receipt_dependency(self) -> DigitalReceiptInterface:
+        if self.__digital_receipt_class is None:
+            raise ValueError("Digital receipt dependency not set")
         return self.__digital_receipt_class

@@ -20,7 +20,7 @@ class DigitalReceipt(DigitalReceiptInterface):
         self.__receipt_total = None
         self.__everyday_extra_discount = 0.0
 
-    def get_receipt_items(self) -> list:
+    def get_receipt_items(self) -> dict:
         """Returns the items inside the receipt."""
         
         return self.__receipt_items
@@ -58,7 +58,7 @@ class DigitalReceipt(DigitalReceiptInterface):
             ortherwise it will return the total."""
         
         receipt_total = 0.0
-        for obj in self.__receipt_items.values():
+        for obj in self.get_receipt_items().values():
             receipt_total += obj.get_item_price()
 
         if set_new_total != True:

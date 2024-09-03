@@ -1,4 +1,6 @@
 from .interfaces import ShopperInterface
+from .grocery_item import GroceryItem
+
 
 class Shopper(ShopperInterface):
     """
@@ -25,7 +27,7 @@ class Shopper(ShopperInterface):
         self.__name =new_name
 
     def get_personal_cart_items(self) -> list:
-        """Returns the cart items allocated to the shopper."""
+        """Returns the cart item objects allocated to the shopper."""
         return self.__personal_cart_items
 
     def get_paid_for_items(self) -> bool:
@@ -44,13 +46,13 @@ class Shopper(ShopperInterface):
         """Sets the cart total for the shopper."""
         self.__personal_cart_total = new_total
 
-    def add_to_personal_cart(self, item) -> None:
+    def add_to_personal_cart(self, item)  -> None:
         """Add a grocery item to the shopper's personal cart.
 
         Parameters:
         - item: Grocery item object to be added."""
 
-        self.get_personal_cart_items().append(item)
+        self.__personal_cart_items.append(item)
 
     def remove_from_personal_cart(self, item) -> None:
         """Remove an item from the personal cart or reset the cart if specified.
@@ -58,10 +60,14 @@ class Shopper(ShopperInterface):
         Parameters:
         - item: Grocery item object to be removed."""
 
-        if item in self.get_personal_cart_items():
-            self.get_personal_cart_items().remove(item)
+        if item in self.__personal_cart_items:
+            self.__personal_cart_items.remove(item)
         else:
             raise ValueError("Item not Found in cart.")
+
+    def reset_personal_cart(self) -> None:
+        """Resets personal cart items"""
+        self.__personal_cart_items = []
 
     def calculate_cart_total(self, setter=False) -> float:
         """
@@ -71,16 +77,18 @@ class Shopper(ShopperInterface):
         - setter (bool): If set to True, the cart total is stored.
 
         Returns:
-        - float: Total cost of items in the shopper's cart."""
+        - float: Total cost of items in the shopper's cart.
+        """
 
         cart_total = 0.0
-        for item in self.get_personal_cart_items():
-            cart_total += item.get_item_price()
 
-        # if setter is Treu, the new total calculated will be stored
+        personal_cart_items = self.get_personal_cart_items()
+
+        if personal_cart_items:
+            for item_obj in personal_cart_items:
+                cart_total += item_obj.get_item_price()
         if setter:
             self.set_personal_cart_total(cart_total)
-
         return cart_total
 
     def __str__(self) -> str:
@@ -98,8 +106,6 @@ class Shopper(ShopperInterface):
             cart_items_info += f"{item.get_item_name()} | ${item.get_item_price():.2f}\n"
 
         cart_total_info = f"Cart Total: ${self.calculate_cart_total():.2f}\n"
-
-        # Constructing the final representation string
         shopper_str = f"{shopper_info}{cart_items_info}{cart_total_info}"
 
         return shopper_str
@@ -112,13 +118,17 @@ class Shopper(ShopperInterface):
         - str: String representation of the shopper.
         """
 
-        cart_items_repr = [f"{item.get_item_name()} | {item.get_item_price()}" for item in self.get_personal_cart_items()]
-
-        # Adds new line for better readability
-        cart_items_str = "\n".join(cart_items_repr)
-
-        shopper_repr = f"Shopper(name={self.get_name()}, paid={self.get_paid_for_items()}, " \
-                       f"cart_total={self.get_personal_cart_total()})\nPersonal Cart Items:\n{cart_items_str}"
+        if self.get_personal_cart_items():
+            
+            cart_items_repr = [f"{item.get_item_name()} | {item.get_item_price()}" for item in self.get_personal_cart_items()]
+            
+            cart_items_str = "\n".join(cart_items_repr)
+            shopper_repr = f"Shopper(name={self.get_name()}, paid={self.get_paid_for_items()}, " \
+                        f"cart_total={self.get_personal_cart_total()})\nPersonal Cart Items:\n{cart_items_str}"
+        else:
+            
+            shopper_repr = f"Shopper(name={self.get_name()}, paid={self.get_paid_for_items()}, " \
+                        f"cart_total={self.get_personal_cart_total()})\nPersonal Cart Items: No items in cart."
 
         return shopper_repr
 

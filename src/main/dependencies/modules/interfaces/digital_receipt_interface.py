@@ -7,6 +7,10 @@ class DigitalReceiptInterface(ABC):
         pass
 
     @abstractmethod
+    def get_receipt_total(self) -> float:
+        pass
+
+    @abstractmethod
     def set_receipt_items(self, new_receipt_items) -> None:
         pass
     
@@ -18,3 +22,6 @@ class DigitalReceiptInterface(ABC):
     def set_EDR_discount_found(self, EDR_bool) -> None:
         pass
 
+    @abstractmethod
+    def get_receipt_items(self) -> list:
+        pass

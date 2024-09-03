@@ -10,6 +10,7 @@ class DependencyContainer():
 
     def __init__(self):
         self.__dependencies = {}
+        self.initialise_dependencies()
 
     def add_dependency(self, name, dependency):
         self.__dependencies[name] = dependency
@@ -28,7 +29,7 @@ class DependencyContainer():
         self.add_dependency('DigitalReceiptInterface', DigitalReceipt())
         self.add_dependency('PDFReaderInterface', PDFReader())
         self.add_dependency('FactoryInterface', ReceiptContentsFactory())
-        self.add_dependency('ShopperInterface', Shopper())
+        self.add_dependency('ShopperInterface', Shopper)
         self.add_dependency('TxtFileHandlerInterface', TxtFileHandler())
-        self.add_dependency('GroceryItem', GroceryItem())
+        self.add_dependency('GroceryItem', GroceryItem)
         self.add_dependency('TxtDBFilePath', '../WoolworthsRewardsRD/src/main/databases/registered_shoppers.txt')
